@@ -1,14 +1,8 @@
 import json
-import psycopg2
+from db import get_connection  # Zentrale DB-Verbindung importieren
 
 # 1. Verbindung aufbauen
-conn = psycopg2.connect(
-    dbname="postgres",
-    user="postgres",
-    password="dbbpostger_123",  # Trage hier dein tatsächliches Passwort ein
-    host="localhost",
-    port="5432"
-)
+conn = get_connection()
 conn.autocommit = True
 cursor = conn.cursor()
 

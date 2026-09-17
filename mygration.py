@@ -1,26 +1,20 @@
 import json
-import psycopg2
 import sqlite3
+from db import get_connection  # Zentrale DB-Verbindung importieren
 
 # 1. Verbindung zu SQLite
 sqlite_conn = sqlite3.connect("Ecommerce Lippe.db")
 sqlite_conn.row_factory = sqlite3.Row  # Zugriff über Spaltennamen ermöglichen
 sqlite_cursor = sqlite_conn.cursor()
 
-# 2. Verbindung zu PostgreSQL
-pg_conn = psycopg2.connect(
-    dbname="postgres",
-    user="postgres",
-    password="dbbpostger_123",
-    host="localhost",
-    port="5432"
-)
+# 2. Verbindung zu PostgreSQL über db.py
+pg_conn = get_connection()
 pg_conn.autocommit = True
 pg_cursor = pg_conn.cursor()
 
 # Tabelle in PostgreSQL anlegen
 pg_cursor.execute("""
-    CREATE TABLE IF NOT EXISTS artikel_gesamt (
+    CREATE TABLE IF NOT EXISTS produkte (
         id TEXT PRIMARY KEY,
         kategorie TEXT,
         preis NUMERIC,
